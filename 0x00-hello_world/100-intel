@@ -1,27 +1,2 @@
 #!/bin/bash
-# Script: generate_assembly.sh
-# Description: Generates Intel syntax assembly code from a C file and saves it to an output file.
-# Usage: ./generate_assembly.sh
-
-# Ensure a C file is provided as an argument
-if [ -z "$CFILE" ]; then
-    echo "Usage: ./generate_assembly.sh <C_FILE>"
-    exit 1
-fi
-
-# Verify if the provided C file exists
-if [ ! -f "$CFILE" ]; then
-    echo "Error: Provided C file '$CFILE' does not exist."
-    exit 1
-fi
-
-# Extract the file name without extension
-BASENAME=$(basename "$CFILE" .c)
-
-# Define the output file name with .s extension
-OUTPUT_FILE="$BASENAME.s"
-
-# Generate the assembly code using GCC's -S flag
-gcc -S -masm=intel "$CFILE" -o "$OUTPUT_FILE"
-
-echo "Intel syntax assembly code generated from '$CFILE' and saved to '$OUTPUT_FILE'."
+gcc -S -masm=intel "$CFILE" -o "${CFILE%.c}.s"
